@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 import static com.gorbatko.renderfarmserver.exception.RenderFarmException.TASK_NOT_FOUND;
@@ -30,11 +31,12 @@ import static com.gorbatko.renderfarmserver.util.TaskStatus.COMPLETE;
 public class TaskService {
     private static final int MAX_DELAY = 5;
     private static final int MIN_DELAY = 1;
-    private static final Random RANDOM = new Random();
+    private static final Random RANDOM = ThreadLocalRandom.current();
     private static final String TASK_ADDED = "Task has been added";
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
 
+    // TODO handle service startup with existing records in DB (when there are RENDERING tasks)
     private ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
     public TaskServiceMessageResponseDto addTask(TaskDto dto) {

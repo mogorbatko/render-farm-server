@@ -18,6 +18,7 @@ import static com.gorbatko.renderfarmserver.exception.RenderFarmException.USER_N
 @Service
 @RequiredArgsConstructor
 public class UserService {
+    private static final BCryptPasswordEncoder B_CRYPT_PASSWORD_ENCODER = new BCryptPasswordEncoder();
     private final UserRepository userRepository;
     private static final String USER_REGISTERED = "User has been registered!";
     private static final String USER_LOGIN = "Your login was successful!";
@@ -45,8 +46,6 @@ public class UserService {
     }
 
     private String encryptPassword(String password) {
-        return new BCryptPasswordEncoder().encode(password);
+        return B_CRYPT_PASSWORD_ENCODER.encode(password);
     }
-
-
 }

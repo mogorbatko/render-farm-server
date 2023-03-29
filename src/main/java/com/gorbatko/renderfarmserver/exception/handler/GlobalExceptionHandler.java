@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler
+    @ExceptionHandler(RenderFarmException.class)
     public ResponseEntity<ExceptionResponseDto> handleRenderFarmException(final RenderFarmException exception) {
         return ResponseEntity.status(exception.getStatus())
                 .body(new ExceptionResponseDto(exception.getMessage()));
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponseDto> handleException(final Exception exception) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ExceptionResponseDto(exception.getMessage()));
